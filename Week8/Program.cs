@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Runtime.Intrinsics.Wasm;
+using System.Security.Cryptography.X509Certificates;
 
 public abstract class DeliveryItem
 {
@@ -59,4 +60,21 @@ public class CargoContainer<T> where T : DeliveryItem
         }
         return s;
     }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Letter letter1 = new Letter("1488L", 0.67);
+        Parcel parcel1 = new Parcel("6769P",6.7, "52 67 69");
+        letter1.PrintInfo();
+        parcel1.PrintInfo();
+        CargoContainer<DeliveryItem> myCargo = new CargoContainer<DeliveryItem>();
+        myCargo.AddItem(letter1);
+        myCargo.AddItem(parcel1);
+        Console.WriteLine($"Total Cost: {myCargo.GetTotalCost()}");
+
+    }
+
 }
